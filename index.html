@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Danly World - Minecraft сервер</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
             margin: 0;
@@ -12,10 +13,23 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
+        :root {
+            --mc-green: #3B8526;
+            --mc-dark-green: #2A631C;
+            --mc-brown: #8B4513;
+            --mc-dark-brown: #5D2906;
+            --mc-dirt: #9C7C5C;
+            --mc-stone: #8C8C8C;
+            --mc-coal: #373737;
+            --mc-gold: #FAD053;
+            --mc-diamond: #2CB1E3;
+        }
+        
         body {
             background-color: #1a1a1a;
             color: #f0f0f0;
             line-height: 1.6;
+            background-image: url('https://www.transparenttextures.com/patterns/dark-mosaic.png');
         }
         
         .container {
@@ -24,10 +38,15 @@
             padding: 0 20px;
         }
         
+        /* Header */
         header {
-            background-color: #2a2a2a;
-            padding: 20px 0;
-            border-bottom: 2px solid #3a3a3a;
+            background: linear-gradient(to bottom, var(--mc-dark-brown), var(--mc-brown));
+            padding: 15px 0;
+            border-bottom: 5px solid var(--mc-dark-brown);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
         
         .header-content {
@@ -37,9 +56,17 @@
         }
         
         .logo {
-            font-size: 24px;
+            font-size: 28px;
             font-weight: bold;
-            color: #00a8ff;
+            color: var(--mc-gold);
+            text-shadow: 2px 2px 0 #000, 4px 4px 0 rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            font-size: 32px;
         }
         
         nav ul {
@@ -48,117 +75,257 @@
         }
         
         nav ul li {
-            margin-left: 20px;
+            margin-left: 25px;
         }
         
         nav ul li a {
             color: #f0f0f0;
             text-decoration: none;
-            transition: color 0.3s;
+            font-weight: bold;
+            padding: 8px 15px;
+            border-radius: 5px;
+            transition: all 0.3s;
+            text-shadow: 1px 1px 0 #000;
         }
         
         nav ul li a:hover {
-            color: #00a8ff;
+            background-color: var(--mc-dark-brown);
+            color: var(--mc-gold);
         }
         
+        /* Hero Section */
         .hero {
-            padding: 80px 0;
+            padding: 100px 0;
             text-align: center;
-            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
+                        url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
             background-size: cover;
             background-position: center;
+            background-attachment: fixed;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(59, 133, 38, 0.1) 2px,
+                rgba(59, 133, 38, 0.1) 4px
+            );
+            pointer-events: none;
         }
         
         .hero h1 {
-            font-size: 48px;
+            font-size: 52px;
             margin-bottom: 20px;
-            color: #00a8ff;
+            color: var(--mc-gold);
+            text-shadow: 3px 3px 0 #000, 6px 6px 0 rgba(0,0,0,0.2);
         }
         
         .hero p {
-            font-size: 20px;
+            font-size: 22px;
             max-width: 700px;
             margin: 0 auto 30px;
+            text-shadow: 1px 1px 0 #000;
         }
         
         .btn {
             display: inline-block;
-            background-color: #00a8ff;
+            background: linear-gradient(to bottom, var(--mc-green), var(--mc-dark-green));
             color: white;
-            padding: 12px 30px;
-            border-radius: 5px;
+            padding: 14px 35px;
+            border-radius: 8px;
             text-decoration: none;
             font-weight: bold;
-            transition: background-color 0.3s;
+            font-size: 18px;
+            transition: all 0.3s;
+            border: 2px solid #2A631C;
+            box-shadow: 0 4px 0 #1E4A14, 0 6px 8px rgba(0,0,0,0.4);
+            text-shadow: 1px 1px 0 #000;
         }
         
         .btn:hover {
-            background-color: #0090d9;
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #1E4A14, 0 4px 8px rgba(0,0,0,0.4);
+            background: linear-gradient(to bottom, #4A9A32, #2A631C);
         }
         
+        .btn-secondary {
+            background: linear-gradient(to bottom, var(--mc-brown), var(--mc-dark-brown));
+            border: 2px solid #5D2906;
+            box-shadow: 0 4px 0 #3D1B04, 0 6px 8px rgba(0,0,0,0.4);
+        }
+        
+        .btn-secondary:hover {
+            box-shadow: 0 2px 0 #3D1B04, 0 4px 8px rgba(0,0,0,0.4);
+            background: linear-gradient(to bottom, #9C5A2F, #5D2906);
+        }
+        
+        /* Servers Section */
         .servers {
-            padding: 60px 0;
+            padding: 80px 0;
+            background-color: #222;
+            background-image: url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
         }
         
         .section-title {
             text-align: center;
-            margin-bottom: 40px;
-            font-size: 32px;
-            color: #00a8ff;
+            margin-bottom: 50px;
+            font-size: 36px;
+            color: var(--mc-gold);
+            text-shadow: 2px 2px 0 #000;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .section-title::after {
+            content: "";
+            display: block;
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(to right, transparent, var(--mc-gold), transparent);
+            margin: 10px auto 0;
         }
         
         .server-list {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 30px;
         }
         
         .server-card {
-            background-color: #2a2a2a;
-            padding: 25px;
-            border-radius: 8px;
+            background: linear-gradient(to bottom, #3a3a3a, #2a2a2a);
+            padding: 30px;
+            border-radius: 10px;
             text-align: center;
             transition: transform 0.3s;
+            border: 2px solid #5a5a5a;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .server-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, var(--mc-green), var(--mc-gold), var(--mc-diamond));
         }
         
         .server-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-10px);
+            box-shadow: 0 12px 20px rgba(0,0,0,0.4);
         }
         
         .server-card h3 {
             margin-bottom: 15px;
-            color: #00a8ff;
+            color: var(--mc-gold);
+            font-size: 24px;
+            text-shadow: 1px 1px 0 #000;
         }
         
         .server-status {
             display: inline-block;
-            padding: 5px 15px;
+            padding: 8px 20px;
             border-radius: 20px;
-            font-size: 14px;
-            margin-bottom: 15px;
+            font-size: 16px;
+            margin-bottom: 20px;
+            font-weight: bold;
+            text-shadow: 1px 1px 0 #000;
         }
         
         .online {
-            background-color: #2ecc71;
+            background: linear-gradient(to bottom, #2ecc71, #27ae60);
             color: white;
+            box-shadow: 0 4px 0 #219653;
         }
         
         .offline {
-            background-color: #e74c3c;
+            background: linear-gradient(to bottom, #e74c3c, #c0392b);
             color: white;
+            box-shadow: 0 4px 0 #A23526;
         }
         
         .server-ip {
             background-color: #3a3a3a;
-            padding: 10px;
+            padding: 12px;
             border-radius: 5px;
             font-family: monospace;
-            margin: 15px 0;
+            margin: 20px 0;
+            font-size: 18px;
+            border: 1px solid #5a5a5a;
+            color: var(--mc-gold);
+            font-weight: bold;
         }
         
+        .server-description {
+            margin-bottom: 20px;
+            color: #ccc;
+        }
+        
+        /* How to Play Section */
+        .how-to-play {
+            padding: 80px 0;
+            background-color: #1a1a1a;
+            background-image: url('https://www.transparenttextures.com/patterns/diagmonds.png');
+        }
+        
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .step {
+            background: linear-gradient(to bottom, #3a3a3a, #2a2a2a);
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            border: 2px solid #5a5a5a;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+            transition: transform 0.3s;
+        }
+        
+        .step:hover {
+            transform: translateY(-5px);
+        }
+        
+        .step-icon {
+            font-size: 48px;
+            color: var(--mc-gold);
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 0 #000;
+        }
+        
+        .step h3 {
+            margin-bottom: 15px;
+            color: var(--mc-gold);
+            font-size: 22px;
+        }
+        
+        .step p {
+            color: #ccc;
+        }
+        
+        /* News Section */
         .news {
-            padding: 60px 0;
+            padding: 80px 0;
             background-color: #222;
+            background-image: url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
         }
         
         .news-list {
@@ -167,158 +334,109 @@
         }
         
         .news-item {
-            background-color: #2a2a2a;
+            background: linear-gradient(to bottom, #3a3a3a, #2a2a2a);
             padding: 25px;
-            border-radius: 8px;
-            margin-bottom: 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            border-left: 5px solid var(--mc-green);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+            transition: transform 0.3s;
+        }
+        
+        .news-item:hover {
+            transform: translateX(5px);
         }
         
         .news-item h3 {
             margin-bottom: 10px;
-            color: #00a8ff;
+            color: var(--mc-gold);
+            font-size: 22px;
         }
         
         .news-date {
             color: #888;
             font-size: 14px;
             margin-bottom: 15px;
+            display: flex;
+            align-items: center;
         }
         
+        .news-date i {
+            margin-right: 8px;
+            color: var(--mc-green);
+        }
+        
+        /* Footer */
         footer {
-            background-color: #1a1a1a;
-            padding: 30px 0;
+            background: linear-gradient(to bottom, var(--mc-dark-brown), #1a1a1a);
+            padding: 40px 0 20px;
             text-align: center;
-            border-top: 1px solid #3a3a3a;
+            border-top: 5px solid var(--mc-brown);
         }
         
-        /* Админ панель */
-        .admin-panel {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.9);
-            z-index: 1000;
-            overflow-y: auto;
-            padding: 20px;
-        }
-        
-        .admin-content {
-            background-color: #2a2a2a;
-            max-width: 800px;
-            margin: 50px auto;
-            padding: 30px;
-            border-radius: 8px;
-        }
-        
-        .admin-header {
+        .footer-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 30px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #3a3a3a;
-        }
-        
-        .admin-tabs {
-            display: flex;
             margin-bottom: 20px;
         }
         
-        .admin-tab {
-            padding: 10px 20px;
-            background-color: #3a3a3a;
-            cursor: pointer;
-            margin-right: 5px;
-            border-radius: 5px 5px 0 0;
-        }
-        
-        .admin-tab.active {
-            background-color: #00a8ff;
-        }
-        
-        .admin-section {
-            display: none;
-        }
-        
-        .admin-section.active {
-            display: block;
-        }
-        
-        .form-group {
-            margin-bottom: 20px;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-        }
-        
-        .form-group input, .form-group textarea {
-            width: 100%;
-            padding: 10px;
-            background-color: #3a3a3a;
-            border: 1px solid #4a4a4a;
-            border-radius: 5px;
-            color: white;
-        }
-        
-        .form-group textarea {
-            min-height: 150px;
-            resize: vertical;
-        }
-        
-        .admin-login {
-            max-width: 400px;
-            margin: 100px auto;
-            padding: 30px;
-            background-color: #2a2a2a;
-            border-radius: 8px;
-        }
-        
-        .login-btn {
-            width: 100%;
-            padding: 12px;
-            background-color: #00a8ff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
+        .footer-logo {
+            font-size: 24px;
             font-weight: bold;
-            margin-top: 10px;
+            color: var(--mc-gold);
+            text-shadow: 2px 2px 0 #000;
         }
         
-        .admin-actions {
+        .social-links {
             display: flex;
-            gap: 10px;
-            margin-top: 20px;
+            gap: 15px;
         }
         
-        .admin-btn {
-            padding: 8px 15px;
-            background-color: #00a8ff;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
+        .social-links a {
+            color: #ccc;
+            font-size: 20px;
+            transition: color 0.3s;
         }
         
-        .delete-btn {
-            background-color: #e74c3c;
+        .social-links a:hover {
+            color: var(--mc-gold);
         }
         
-        .admin-link {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: #00a8ff;
-            color: white;
-            padding: 10px 15px;
-            border-radius: 5px;
-            text-decoration: none;
+        .copyright {
+            color: #888;
             font-size: 14px;
+            border-top: 1px solid #444;
+            padding-top: 20px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            nav ul {
+                gap: 10px;
+            }
+            
+            nav ul li {
+                margin-left: 0;
+            }
+            
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .hero p {
+                font-size: 18px;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                gap: 20px;
+            }
         }
     </style>
 </head>
@@ -327,11 +445,15 @@
     <header>
         <div class="container">
             <div class="header-content">
-                <div class="logo">Danly World</div>
+                <div class="logo">
+                    <i class="fas fa-cube"></i>
+                    Danly World
+                </div>
                 <nav>
                     <ul>
                         <li><a href="#home">Главная</a></li>
                         <li><a href="#servers">Серверы</a></li>
+                        <li><a href="#how-to-play">Как играть</a></li>
                         <li><a href="#news">Новости</a></li>
                     </ul>
                 </nav>
@@ -355,15 +477,51 @@
                     <h3>Сервер Грифф</h3>
                     <span class="server-status online">Online</span>
                     <div class="server-ip">f1.play2go.cloud:26842</div>
-                    <p>Основной сервер с гриферством и PvP режимом.</p>
+                    <p class="server-description">Основной сервер с гриферством и PvP режимом. Присоединяйтесь к эпическим битвам и стройте свои базы!</p>
                     <a href="#" class="btn">Подключиться</a>
                 </div>
                 <div class="server-card">
                     <h3>Сервер 2</h3>
                     <span class="server-status offline">Offline</span>
                     <div class="server-ip">Сервер закрыт</div>
-                    <p>Второй сервер временно недоступен.</p>
-                    <a href="#" class="btn" style="background-color: #666; cursor: not-allowed;">Недоступно</a>
+                    <p class="server-description">Второй сервер временно недоступен. Следите за новостями для информации о запуске.</p>
+                    <a href="#" class="btn btn-secondary" style="cursor: not-allowed;">Недоступно</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="how-to-play" id="how-to-play">
+        <div class="container">
+            <h2 class="section-title">Как начать играть</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-icon">
+                        <i class="fas fa-download"></i>
+                    </div>
+                    <h3>Шаг 1: Установите Minecraft</h3>
+                    <p>Убедитесь, что у вас установлена последняя версия Minecraft Java Edition.</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon">
+                        <i class="fas fa-server"></i>
+                    </div>
+                    <h3>Шаг 2: Добавьте сервер</h3>
+                    <p>В меню мультиплеера нажмите "Добавить сервер" и введите IP-адрес нашего сервера.</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon">
+                        <i class="fas fa-gamepad"></i>
+                    </div>
+                    <h3>Шаг 3: Начните играть</h3>
+                    <p>Подключитесь к серверу, создайте персонажа и начните свое приключение в мире Danly!</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Шаг 4: Присоединяйтесь к сообществу</h3>
+                    <p>Общайтесь с другими игроками, вступайте в кланы и участвуйте в ивентах!</p>
                 </div>
             </div>
         </div>
@@ -372,296 +530,41 @@
     <section class="news" id="news">
         <div class="container">
             <h2 class="section-title">Новости сервера</h2>
-            <div class="news-list" id="news-container">
-                <!-- Новости будут загружаться здесь -->
+            <div class="news-list">
+                <div class="news-item">
+                    <h3>Добро пожаловать на Danly World!</h3>
+                    <div class="news-date"><i class="far fa-calendar-alt"></i> 01.01.2024</div>
+                    <p>Мы рады приветствовать вас на нашем сервере. Присоединяйтесь к нашему сообществу и наслаждайтесь игрой! На сервере доступны различные режимы и регулярные ивенты.</p>
+                </div>
+                <div class="news-item">
+                    <h3>Сервер Грифф запущен</h3>
+                    <div class="news-date"><i class="far fa-calendar-alt"></i> 15.12.2023</div>
+                    <p>Основной сервер с гриферством и PvP режимом теперь доступен для игры. Присоединяйтесь к эпическим битвам и постройте свою непобедимую базу!</p>
+                </div>
+                <div class="news-item">
+                    <h3>Планы на будущее</h3>
+                    <div class="news-date"><i class="far fa-calendar-alt"></i> 10.12.2023</div>
+                    <p>В ближайшее время планируем запустить мини-игры и экономический сервер. Следите за обновлениями!</p>
+                </div>
             </div>
         </div>
     </section>
 
     <footer>
         <div class="container">
-            <p>Danly World Minecraft Server &copy; 2023</p>
+            <div class="footer-content">
+                <div class="footer-logo">Danly World</div>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-discord"></i></a>
+                    <a href="#"><i class="fab fa-vk"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-telegram"></i></a>
+                </div>
+            </div>
+            <div class="copyright">
+                Danly World Minecraft Server &copy; 2024. Все права защищены.
+            </div>
         </div>
     </footer>
-
-    <!-- Ссылка для входа в админ-панель -->
-    <a href="#" class="admin-link" id="admin-login-link">Админ</a>
-
-    <!-- Форма входа в админ-панель -->
-    <div class="admin-panel" id="admin-login">
-        <div class="admin-login">
-            <h2>Вход в админ-панель</h2>
-            <div class="form-group">
-                <label for="login">Логин:</label>
-                <input type="text" id="login" placeholder="Введите логин">
-            </div>
-            <div class="form-group">
-                <label for="password">Пароль:</label>
-                <input type="password" id="password" placeholder="Введите пароль">
-            </div>
-            <button class="login-btn" id="login-btn">Войти</button>
-            <p id="login-error" style="color: #e74c3c; margin-top: 10px; display: none;">Неверный логин или пароль</p>
-        </div>
-    </div>
-
-    <!-- Админ-панель -->
-    <div class="admin-panel" id="admin-panel">
-        <div class="admin-content">
-            <div class="admin-header">
-                <h2>Админ-панель Danly World</h2>
-                <button class="admin-btn" id="logout-btn">Выйти</button>
-            </div>
-            
-            <div class="admin-tabs">
-                <div class="admin-tab active" data-tab="news">Управление новостями</div>
-                <div class="admin-tab" data-tab="settings">Настройки сайта</div>
-            </div>
-            
-            <div class="admin-section active" id="news-section">
-                <h3>Добавить новость</h3>
-                <div class="form-group">
-                    <label for="news-title">Заголовок:</label>
-                    <input type="text" id="news-title" placeholder="Введите заголовок новости">
-                </div>
-                <div class="form-group">
-                    <label for="news-content">Содержание:</label>
-                    <textarea id="news-content" placeholder="Введите содержание новости"></textarea>
-                </div>
-                <button class="admin-btn" id="add-news-btn">Добавить новость</button>
-                
-                <h3 style="margin-top: 30px;">Существующие новости</h3>
-                <div id="admin-news-list">
-                    <!-- Список новостей для управления -->
-                </div>
-            </div>
-            
-            <div class="admin-section" id="settings-section">
-                <h3>Настройки сайта</h3>
-                <div class="form-group">
-                    <label for="site-title">Название сайта:</label>
-                    <input type="text" id="site-title" placeholder="Введите название сайта">
-                </div>
-                <div class="form-group">
-                    <label for="server1-ip">IP первого сервера:</label>
-                    <input type="text" id="server1-ip" placeholder="Введите IP первого сервера">
-                </div>
-                <div class="form-group">
-                    <label for="server1-status">Статус первого сервера:</label>
-                    <select id="server1-status">
-                        <option value="online">Online</option>
-                        <option value="offline">Offline</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="server2-ip">IP второго сервера:</label>
-                    <input type="text" id="server2-ip" placeholder="Введите IP второго сервера">
-                </div>
-                <div class="form-group">
-                    <label for="server2-status">Статус второго сервера:</label>
-                    <select id="server2-status">
-                        <option value="online">Online</option>
-                        <option value="offline">Offline</option>
-                    </select>
-                </div>
-                <button class="admin-btn" id="save-settings-btn">Сохранить настройки</button>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // Данные по умолчанию
-        let siteData = {
-            title: "Danly World",
-            server1: {
-                ip: "f1.play2go.cloud:26842",
-                status: "online",
-                name: "Сервер Грифф"
-            },
-            server2: {
-                ip: "Сервер закрыт",
-                status: "offline",
-                name: "Сервер 2"
-            },
-            news: [
-                {
-                    id: 1,
-                    title: "Добро пожаловать на Danly World!",
-                    content: "Мы рады приветствовать вас на нашем сервере. Присоединяйтесь к нашему сообществу и наслаждайтесь игрой!",
-                    date: new Date().toLocaleDateString('ru-RU')
-                }
-            ]
-        };
-
-        // Загрузка данных из localStorage
-        function loadData() {
-            const savedData = localStorage.getItem('danlyWorldData');
-            if (savedData) {
-                siteData = JSON.parse(savedData);
-            }
-            renderSite();
-        }
-
-        // Сохранение данных в localStorage
-        function saveData() {
-            localStorage.setItem('danlyWorldData', JSON.stringify(siteData));
-            renderSite();
-        }
-
-        // Рендер сайта
-        function renderSite() {
-            // Обновление заголовка
-            document.title = siteData.title + " - Minecraft сервер";
-            document.querySelector('.logo').textContent = siteData.title;
-            document.querySelector('.hero h1').textContent = siteData.title;
-
-            // Обновление информации о серверах
-            document.querySelector('.server-card:nth-child(1) h3').textContent = siteData.server1.name;
-            document.querySelector('.server-card:nth-child(1) .server-status').textContent = 
-                siteData.server1.status === 'online' ? 'Online' : 'Offline';
-            document.querySelector('.server-card:nth-child(1) .server-status').className = 
-                'server-status ' + (siteData.server1.status === 'online' ? 'online' : 'offline');
-            document.querySelector('.server-card:nth-child(1) .server-ip').textContent = siteData.server1.ip;
-
-            document.querySelector('.server-card:nth-child(2) h3').textContent = siteData.server2.name;
-            document.querySelector('.server-card:nth-child(2) .server-status').textContent = 
-                siteData.server2.status === 'online' ? 'Online' : 'Offline';
-            document.querySelector('.server-card:nth-child(2) .server-status').className = 
-                'server-status ' + (siteData.server2.status === 'online' ? 'online' : 'offline');
-            document.querySelector('.server-card:nth-child(2) .server-ip').textContent = siteData.server2.ip;
-
-            // Рендер новостей
-            const newsContainer = document.getElementById('news-container');
-            newsContainer.innerHTML = '';
-            
-            siteData.news.forEach(newsItem => {
-                const newsElement = document.createElement('div');
-                newsElement.className = 'news-item';
-                newsElement.innerHTML = `
-                    <h3>${newsItem.title}</h3>
-                    <div class="news-date">${newsItem.date}</div>
-                    <p>${newsItem.content}</p>
-                `;
-                newsContainer.appendChild(newsElement);
-            });
-
-            // Рендер новостей в админ-панели
-            const adminNewsList = document.getElementById('admin-news-list');
-            adminNewsList.innerHTML = '';
-            
-            siteData.news.forEach(newsItem => {
-                const newsElement = document.createElement('div');
-                newsElement.className = 'news-item';
-                newsElement.innerHTML = `
-                    <h3>${newsItem.title}</h3>
-                    <div class="news-date">${newsItem.date}</div>
-                    <p>${newsItem.content}</p>
-                    <div class="admin-actions">
-                        <button class="admin-btn delete-btn" data-id="${newsItem.id}">Удалить</button>
-                    </div>
-                `;
-                adminNewsList.appendChild(newsElement);
-            });
-
-            // Добавление обработчиков для кнопок удаления
-            document.querySelectorAll('.delete-btn').forEach(button => {
-                button.addEventListener('click', function() {
-                    const id = parseInt(this.getAttribute('data-id'));
-                    deleteNews(id);
-                });
-            });
-        }
-
-        // Удаление новости
-        function deleteNews(id) {
-            siteData.news = siteData.news.filter(item => item.id !== id);
-            saveData();
-        }
-
-        // Добавление новости
-        function addNews(title, content) {
-            const newNews = {
-                id: Date.now(),
-                title: title,
-                content: content,
-                date: new Date().toLocaleDateString('ru-RU')
-            };
-            siteData.news.unshift(newNews);
-            saveData();
-        }
-
-        // Инициализация при загрузке страницы
-        document.addEventListener('DOMContentLoaded', function() {
-            loadData();
-            
-            // Обработчики для админ-панели
-            document.getElementById('admin-login-link').addEventListener('click', function(e) {
-                e.preventDefault();
-                document.getElementById('admin-login').style.display = 'block';
-            });
-            
-            document.getElementById('login-btn').addEventListener('click', function() {
-                const login = document.getElementById('login').value;
-                const password = document.getElementById('password').value;
-                
-                if (login === 'ADMTEST9263' && password === 'APANELDanlyWorld') {
-                    document.getElementById('admin-login').style.display = 'none';
-                    document.getElementById('admin-panel').style.display = 'block';
-                } else {
-                    document.getElementById('login-error').style.display = 'block';
-                }
-            });
-            
-            document.getElementById('logout-btn').addEventListener('click', function() {
-                document.getElementById('admin-panel').style.display = 'none';
-                document.getElementById('login').value = '';
-                document.getElementById('password').value = '';
-                document.getElementById('login-error').style.display = 'none';
-            });
-            
-            // Переключение вкладок в админ-панели
-            document.querySelectorAll('.admin-tab').forEach(tab => {
-                tab.addEventListener('click', function() {
-                    document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
-                    document.querySelectorAll('.admin-section').forEach(s => s.classList.remove('active'));
-                    
-                    this.classList.add('active');
-                    document.getElementById(this.getAttribute('data-tab') + '-section').classList.add('active');
-                });
-            });
-            
-            // Добавление новости
-            document.getElementById('add-news-btn').addEventListener('click', function() {
-                const title = document.getElementById('news-title').value;
-                const content = document.getElementById('news-content').value;
-                
-                if (title && content) {
-                    addNews(title, content);
-                    document.getElementById('news-title').value = '';
-                    document.getElementById('news-content').value = '';
-                } else {
-                    alert('Заполните все поля!');
-                }
-            });
-            
-            // Сохранение настроек
-            document.getElementById('save-settings-btn').addEventListener('click', function() {
-                siteData.title = document.getElementById('site-title').value || siteData.title;
-                siteData.server1.ip = document.getElementById('server1-ip').value || siteData.server1.ip;
-                siteData.server1.status = document.getElementById('server1-status').value;
-                siteData.server2.ip = document.getElementById('server2-ip').value || siteData.server2.ip;
-                siteData.server2.status = document.getElementById('server2-status').value;
-                
-                saveData();
-                alert('Настройки сохранены!');
-            });
-            
-            // Заполнение полей настроек текущими значениями
-            document.getElementById('site-title').value = siteData.title;
-            document.getElementById('server1-ip').value = siteData.server1.ip;
-            document.getElementById('server1-status').value = siteData.server1.status;
-            document.getElementById('server2-ip').value = siteData.server2.ip;
-            document.getElementById('server2-status').value = siteData.server2.status;
-        });
-    </script>
 </body>
 </html>
