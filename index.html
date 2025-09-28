@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danly World - Minecraft сервер</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #1a1a1a;
+            color: #f0f0f0;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background-color: #2a2a2a;
+            padding: 20px 0;
+            border-bottom: 2px solid #3a3a3a;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #00a8ff;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 20px;
+        }
+        
+        nav ul li a {
+            color: #f0f0f0;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: #00a8ff;
+        }
+        
+        .hero {
+            padding: 80px 0;
+            text-align: center;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: #00a8ff;
+        }
+        
+        .hero p {
+            font-size: 20px;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: #00a8ff;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #0090d9;
+        }
+        
+        .servers {
+            padding: 60px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 32px;
+            color: #00a8ff;
+        }
+        
+        .server-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .server-card {
+            background-color: #2a2a2a;
+            padding: 25px;
+            border-radius: 8px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        
+        .server-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .server-card h3 {
+            margin-bottom: 15px;
+            color: #00a8ff;
+        }
+        
+        .server-status {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+        
+        .online {
+            background-color: #2ecc71;
+            color: white;
+        }
+        
+        .offline {
+            background-color: #e74c3c;
+            color: white;
+        }
+        
+        .server-ip {
+            background-color: #3a3a3a;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: monospace;
+            margin: 15px 0;
+        }
+        
+        .news {
+            padding: 60px 0;
+            background-color: #222;
+        }
+        
+        .news-list {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .news-item {
+            background-color: #2a2a2a;
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .news-item h3 {
+            margin-bottom: 10px;
+            color: #00a8ff;
+        }
+        
+        .news-date {
+            color: #888;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+        
+        footer {
+            background-color: #1a1a1a;
+            padding: 30px 0;
+            text-align: center;
+            border-top: 1px solid #3a3a3a;
+        }
+        
+        /* Админ панель */
+        .admin-panel {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
+            z-index: 1000;
+            overflow-y: auto;
+            padding: 20px;
+        }
+        
+        .admin-content {
+            background-color: #2a2a2a;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 30px;
+            border-radius: 8px;
+        }
+        
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #3a3a3a;
+        }
+        
+        .admin-tabs {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        
+        .admin-tab {
+            padding: 10px 20px;
+            background-color: #3a3a3a;
+            cursor: pointer;
+            margin-right: 5px;
+            border-radius: 5px 5px 0 0;
+        }
+        
+        .admin-tab.active {
+            background-color: #00a8ff;
+        }
+        
+        .admin-section {
+            display: none;
+        }
+        
+        .admin-section.active {
+            display: block;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+        }
+        
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            background-color: #3a3a3a;
+            border: 1px solid #4a4a4a;
+            border-radius: 5px;
+            color: white;
+        }
+        
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+        
+        .admin-login {
+            max-width: 400px;
+            margin: 100px auto;
+            padding: 30px;
+            background-color: #2a2a2a;
+            border-radius: 8px;
+        }
+        
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #00a8ff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        
+        .admin-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .admin-btn {
+            padding: 8px 15px;
+            background-color: #00a8ff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .delete-btn {
+            background-color: #e74c3c;
+        }
+        
+        .admin-link {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #00a8ff;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Основной контент сайта -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">Danly World</div>
+                <nav>
+                    <ul>
+                        <li><a href="#home">Главная</a></li>
+                        <li><a href="#servers">Серверы</a></li>
+                        <li><a href="#news">Новости</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero" id="home">
+        <div class="container">
+            <h1>Danly World</h1>
+            <p>Добро пожаловать на наш Minecraft сервер! Присоединяйтесь к нашему сообществу и наслаждайтесь игрой вместе с нами.</p>
+            <a href="#servers" class="btn">Подключиться</a>
+        </div>
+    </section>
+
+    <section class="servers" id="servers">
+        <div class="container">
+            <h2 class="section-title">Наши серверы</h2>
+            <div class="server-list">
+                <div class="server-card">
+                    <h3>Сервер Грифф</h3>
+                    <span class="server-status online">Online</span>
+                    <div class="server-ip">f1.play2go.cloud:26842</div>
+                    <p>Основной сервер с гриферством и PvP режимом.</p>
+                    <a href="#" class="btn">Подключиться</a>
+                </div>
+                <div class="server-card">
+                    <h3>Сервер 2</h3>
+                    <span class="server-status offline">Offline</span>
+                    <div class="server-ip">Сервер закрыт</div>
+                    <p>Второй сервер временно недоступен.</p>
+                    <a href="#" class="btn" style="background-color: #666; cursor: not-allowed;">Недоступно</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="news" id="news">
+        <div class="container">
+            <h2 class="section-title">Новости сервера</h2>
+            <div class="news-list" id="news-container">
+                <!-- Новости будут загружаться здесь -->
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>Danly World Minecraft Server &copy; 2023</p>
+        </div>
+    </footer>
+
+    <!-- Ссылка для входа в админ-панель -->
+    <a href="#" class="admin-link" id="admin-login-link">Админ</a>
+
+    <!-- Форма входа в админ-панель -->
+    <div class="admin-panel" id="admin-login">
+        <div class="admin-login">
+            <h2>Вход в админ-панель</h2>
+            <div class="form-group">
+                <label for="login">Логин:</label>
+                <input type="text" id="login" placeholder="Введите логин">
+            </div>
+            <div class="form-group">
+                <label for="password">Пароль:</label>
+                <input type="password" id="password" placeholder="Введите пароль">
+            </div>
+            <button class="login-btn" id="login-btn">Войти</button>
+            <p id="login-error" style="color: #e74c3c; margin-top: 10px; display: none;">Неверный логин или пароль</p>
+        </div>
+    </div>
+
+    <!-- Админ-панель -->
+    <div class="admin-panel" id="admin-panel">
+        <div class="admin-content">
+            <div class="admin-header">
+                <h2>Админ-панель Danly World</h2>
+                <button class="admin-btn" id="logout-btn">Выйти</button>
+            </div>
+            
+            <div class="admin-tabs">
+                <div class="admin-tab active" data-tab="news">Управление новостями</div>
+                <div class="admin-tab" data-tab="settings">Настройки сайта</div>
+            </div>
+            
+            <div class="admin-section active" id="news-section">
+                <h3>Добавить новость</h3>
+                <div class="form-group">
+                    <label for="news-title">Заголовок:</label>
+                    <input type="text" id="news-title" placeholder="Введите заголовок новости">
+                </div>
+                <div class="form-group">
+                    <label for="news-content">Содержание:</label>
+                    <textarea id="news-content" placeholder="Введите содержание новости"></textarea>
+                </div>
+                <button class="admin-btn" id="add-news-btn">Добавить новость</button>
+                
+                <h3 style="margin-top: 30px;">Существующие новости</h3>
+                <div id="admin-news-list">
+                    <!-- Список новостей для управления -->
+                </div>
+            </div>
+            
+            <div class="admin-section" id="settings-section">
+                <h3>Настройки сайта</h3>
+                <div class="form-group">
+                    <label for="site-title">Название сайта:</label>
+                    <input type="text" id="site-title" placeholder="Введите название сайта">
+                </div>
+                <div class="form-group">
+                    <label for="server1-ip">IP первого сервера:</label>
+                    <input type="text" id="server1-ip" placeholder="Введите IP первого сервера">
+                </div>
+                <div class="form-group">
+                    <label for="server1-status">Статус первого сервера:</label>
+                    <select id="server1-status">
+                        <option value="online">Online</option>
+                        <option value="offline">Offline</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="server2-ip">IP второго сервера:</label>
+                    <input type="text" id="server2-ip" placeholder="Введите IP второго сервера">
+                </div>
+                <div class="form-group">
+                    <label for="server2-status">Статус второго сервера:</label>
+                    <select id="server2-status">
+                        <option value="online">Online</option>
+                        <option value="offline">Offline</option>
+                    </select>
+                </div>
+                <button class="admin-btn" id="save-settings-btn">Сохранить настройки</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Данные по умолчанию
+        let siteData = {
+            title: "Danly World",
+            server1: {
+                ip: "f1.play2go.cloud:26842",
+                status: "online",
+                name: "Сервер Грифф"
+            },
+            server2: {
+                ip: "Сервер закрыт",
+                status: "offline",
+                name: "Сервер 2"
+            },
+            news: [
+                {
+                    id: 1,
+                    title: "Добро пожаловать на Danly World!",
+                    content: "Мы рады приветствовать вас на нашем сервере. Присоединяйтесь к нашему сообществу и наслаждайтесь игрой!",
+                    date: new Date().toLocaleDateString('ru-RU')
+                }
+            ]
+        };
+
+        // Загрузка данных из localStorage
+        function loadData() {
+            const savedData = localStorage.getItem('danlyWorldData');
+            if (savedData) {
+                siteData = JSON.parse(savedData);
+            }
+            renderSite();
+        }
+
+        // Сохранение данных в localStorage
+        function saveData() {
+            localStorage.setItem('danlyWorldData', JSON.stringify(siteData));
+            renderSite();
+        }
+
+        // Рендер сайта
+        function renderSite() {
+            // Обновление заголовка
+            document.title = siteData.title + " - Minecraft сервер";
+            document.querySelector('.logo').textContent = siteData.title;
+            document.querySelector('.hero h1').textContent = siteData.title;
+
+            // Обновление информации о серверах
+            document.querySelector('.server-card:nth-child(1) h3').textContent = siteData.server1.name;
+            document.querySelector('.server-card:nth-child(1) .server-status').textContent = 
+                siteData.server1.status === 'online' ? 'Online' : 'Offline';
+            document.querySelector('.server-card:nth-child(1) .server-status').className = 
+                'server-status ' + (siteData.server1.status === 'online' ? 'online' : 'offline');
+            document.querySelector('.server-card:nth-child(1) .server-ip').textContent = siteData.server1.ip;
+
+            document.querySelector('.server-card:nth-child(2) h3').textContent = siteData.server2.name;
+            document.querySelector('.server-card:nth-child(2) .server-status').textContent = 
+                siteData.server2.status === 'online' ? 'Online' : 'Offline';
+            document.querySelector('.server-card:nth-child(2) .server-status').className = 
+                'server-status ' + (siteData.server2.status === 'online' ? 'online' : 'offline');
+            document.querySelector('.server-card:nth-child(2) .server-ip').textContent = siteData.server2.ip;
+
+            // Рендер новостей
+            const newsContainer = document.getElementById('news-container');
+            newsContainer.innerHTML = '';
+            
+            siteData.news.forEach(newsItem => {
+                const newsElement = document.createElement('div');
+                newsElement.className = 'news-item';
+                newsElement.innerHTML = `
+                    <h3>${newsItem.title}</h3>
+                    <div class="news-date">${newsItem.date}</div>
+                    <p>${newsItem.content}</p>
+                `;
+                newsContainer.appendChild(newsElement);
+            });
+
+            // Рендер новостей в админ-панели
+            const adminNewsList = document.getElementById('admin-news-list');
+            adminNewsList.innerHTML = '';
+            
+            siteData.news.forEach(newsItem => {
+                const newsElement = document.createElement('div');
+                newsElement.className = 'news-item';
+                newsElement.innerHTML = `
+                    <h3>${newsItem.title}</h3>
+                    <div class="news-date">${newsItem.date}</div>
+                    <p>${newsItem.content}</p>
+                    <div class="admin-actions">
+                        <button class="admin-btn delete-btn" data-id="${newsItem.id}">Удалить</button>
+                    </div>
+                `;
+                adminNewsList.appendChild(newsElement);
+            });
+
+            // Добавление обработчиков для кнопок удаления
+            document.querySelectorAll('.delete-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const id = parseInt(this.getAttribute('data-id'));
+                    deleteNews(id);
+                });
+            });
+        }
+
+        // Удаление новости
+        function deleteNews(id) {
+            siteData.news = siteData.news.filter(item => item.id !== id);
+            saveData();
+        }
+
+        // Добавление новости
+        function addNews(title, content) {
+            const newNews = {
+                id: Date.now(),
+                title: title,
+                content: content,
+                date: new Date().toLocaleDateString('ru-RU')
+            };
+            siteData.news.unshift(newNews);
+            saveData();
+        }
+
+        // Инициализация при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            loadData();
+            
+            // Обработчики для админ-панели
+            document.getElementById('admin-login-link').addEventListener('click', function(e) {
+                e.preventDefault();
+                document.getElementById('admin-login').style.display = 'block';
+            });
+            
+            document.getElementById('login-btn').addEventListener('click', function() {
+                const login = document.getElementById('login').value;
+                const password = document.getElementById('password').value;
+                
+                if (login === 'ADMTEST9263' && password === 'APANELDanlyWorld') {
+                    document.getElementById('admin-login').style.display = 'none';
+                    document.getElementById('admin-panel').style.display = 'block';
+                } else {
+                    document.getElementById('login-error').style.display = 'block';
+                }
+            });
+            
+            document.getElementById('logout-btn').addEventListener('click', function() {
+                document.getElementById('admin-panel').style.display = 'none';
+                document.getElementById('login').value = '';
+                document.getElementById('password').value = '';
+                document.getElementById('login-error').style.display = 'none';
+            });
+            
+            // Переключение вкладок в админ-панели
+            document.querySelectorAll('.admin-tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
+                    document.querySelectorAll('.admin-section').forEach(s => s.classList.remove('active'));
+                    
+                    this.classList.add('active');
+                    document.getElementById(this.getAttribute('data-tab') + '-section').classList.add('active');
+                });
+            });
+            
+            // Добавление новости
+            document.getElementById('add-news-btn').addEventListener('click', function() {
+                const title = document.getElementById('news-title').value;
+                const content = document.getElementById('news-content').value;
+                
+                if (title && content) {
+                    addNews(title, content);
+                    document.getElementById('news-title').value = '';
+                    document.getElementById('news-content').value = '';
+                } else {
+                    alert('Заполните все поля!');
+                }
+            });
+            
+            // Сохранение настроек
+            document.getElementById('save-settings-btn').addEventListener('click', function() {
+                siteData.title = document.getElementById('site-title').value || siteData.title;
+                siteData.server1.ip = document.getElementById('server1-ip').value || siteData.server1.ip;
+                siteData.server1.status = document.getElementById('server1-status').value;
+                siteData.server2.ip = document.getElementById('server2-ip').value || siteData.server2.ip;
+                siteData.server2.status = document.getElementById('server2-status').value;
+                
+                saveData();
+                alert('Настройки сохранены!');
+            });
+            
+            // Заполнение полей настроек текущими значениями
+            document.getElementById('site-title').value = siteData.title;
+            document.getElementById('server1-ip').value = siteData.server1.ip;
+            document.getElementById('server1-status').value = siteData.server1.status;
+            document.getElementById('server2-ip').value = siteData.server2.ip;
+            document.getElementById('server2-status').value = siteData.server2.status;
+        });
+    </script>
+</body>
+</html>
